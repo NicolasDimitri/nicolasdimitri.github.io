@@ -106,7 +106,3 @@ inputBoardSize.addEventListener('keyup', (event) => {
   }
 });
 
-
-
-
-a

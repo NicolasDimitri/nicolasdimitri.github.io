@@ -363,5 +363,3 @@ btnCat.addEventListener('click', catBtn);
 
 btnCalculate.addEventListener('click', calculaTotal);
 
-
-a
