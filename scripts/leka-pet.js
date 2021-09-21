@@ -362,3 +362,4 @@ btnDog.addEventListener('click', dogBtn);
 btnCat.addEventListener('click', catBtn);
 
 btnCalculate.addEventListener('click', calculaTotal);
+
