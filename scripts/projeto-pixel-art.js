@@ -105,3 +105,8 @@ inputBoardSize.addEventListener('keyup', (event) => {
     mudarOTamanho();
   }
 });
+
+
+
+
+a

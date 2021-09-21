@@ -70,3 +70,6 @@ funcaoCriaPok()
 
 // para buscar por item: https://pokeapi.co/api/v2/item/${item}
 
+
+
+a
