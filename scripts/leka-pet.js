@@ -421,7 +421,6 @@ function multiplicaPelaQtd(event) {
   const valorDaPeça = click
     .querySelector('.divDoPrecoPorPç')
     .querySelector('.valor');
-
     
     
   console.log(valorDaPeça);
