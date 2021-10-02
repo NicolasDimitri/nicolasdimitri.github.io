@@ -423,6 +423,7 @@ function multiplicaPelaQtd(event) {
     .querySelector('.valor');
 
     
+    
   console.log(valorDaPeça);
 }
 
