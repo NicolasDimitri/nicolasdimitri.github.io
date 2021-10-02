@@ -14,6 +14,7 @@
 
 select {
   padding: 5px;
+  cursor: pointer;
 }
 
 input {
@@ -51,11 +52,11 @@ p {
 }
 
 .divDoPreco p {
-padding: 0px 2px;
-margin: 0;
+  padding: 0px 2px;
+  margin: 0;
 }
 
 .igual {
   padding: 0;
-  margin: 0 13px;
+  margin: 0 10px;
 }
