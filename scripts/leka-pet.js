@@ -421,9 +421,14 @@ function multiplicaPelaQtd(event) {
   const valorDaPeça = click
     .querySelector('.divDoPrecoPorPç')
     .querySelector('.valor');
+    const quantidade = click.querySelector('input')
+
+    const valorDoTamanho = click.querySelector('select').value
+
+    valorDaPeça.innerHTML = valorDoTamanho * quantidade.value
     
     
-  console.log(valorDaPeça);
+  console.log(valorDoTamanho);
 }
 
 btnDog.addEventListener('click', dogBtn);
