@@ -21,6 +21,10 @@ input {
   margin-right: 10px;
 }
 
+button {
+  cursor: pointer;
+}
+
 p {
   display: inline;
   padding: 10px;
@@ -36,3 +40,6 @@ p {
   background-color: #0000ff
 }
 
+.linhas-de-calculo{
+  margin-top: 8px;
+}
