@@ -305,6 +305,7 @@ const dogBtn = () => {
   select.addEventListener('change', multiplicaPelaQtd);
   inputQtd.addEventListener('change', multiplicaPelaQtd);
 
+  criaBtnDelete(div);
   div.appendChild(tamanho);
   div.appendChild(select);
   div.appendChild(qtd);
@@ -317,7 +318,6 @@ const dogBtn = () => {
   div.appendChild(igual);
   div.appendChild(divPrecoTot);
   linhaDoCachorro.appendChild(div);
-  criaBtnDelete(div);
   mudaPrecosDeTodasAsDivs();
 };
 
@@ -514,9 +514,9 @@ function mudaPrecosDeTodasAsDivs() {
       (ele) => ele.tamanho === select
     ).preco;
 
-    precounitario.innerHTML = precoDaPeca;
+    precounitario.innerHTML = precoDaPeca.toFixed(2);
 
-    precototal.innerHTML = parseFloat(input) * precoDaPeca;
+    precototal.innerHTML = (parseFloat(input) * precoDaPeca).toFixed(2);
   });
 }
 
@@ -528,12 +528,20 @@ btnCalculate.addEventListener('click', calculaTotal);
 
 function criaBtnDelete(ondeApendaa) {
   const divDelete = document.createElement('div');
+  const plus = document.createElement('div');
+  plus.className = 'plus';
+  divDelete.appendChild(plus);
   divDelete.className = 'btn-delete';
   divDelete.addEventListener('click', deletaAlinha);
   ondeApendaa.appendChild(divDelete);
 }
 
 function deletaAlinha(event) {
-  event.target.parentNode.remove();
-  mudaPrecosDeTodasAsDivs();
+  if(event.target.parentNode.className === 'linhas-de-calculo') {
+    event.target.parentNode.remove();
+    mudaPrecosDeTodasAsDivs();
+  } else {
+    event.target.parentNode.parentNode.remove();
+    mudaPrecosDeTodasAsDivs();
+  }
 }
