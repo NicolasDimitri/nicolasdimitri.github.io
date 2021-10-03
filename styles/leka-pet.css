@@ -41,6 +41,16 @@ p {
   background-color: #0000ff;
 }
 
+.total p:nth-child(2),
+.total p:nth-child(3) {
+  margin: 0 3px;
+  font-size: 23px;
+}
+
+.total p {
+  padding: 0;
+}
+
 .linhas-de-calculo {
   margin: 0px;
   display: flex;

@@ -233,20 +233,25 @@ const multiplicadorDaQuantidadePeloPreco = (opcaoDePreco) => {
   const linhasDeCalculo = document.querySelectorAll('.linhas-de-calculo');
 
   linhasDeCalculo.forEach((elemento) => {
-    const qtd = elemento.querySelector('input').value;
-    const qtdNumber = parseFloat(qtd);
+    // const qtd = elemento.querySelector('input').value;
+    // const qtdNumber = parseFloat(qtd);
 
-    const select = elemento.querySelector('select').value;
-    const selectNumber = select;
+    // const select = elemento.querySelector('select').value;
+    // const selectNumber = select;
 
-    const selectObj = tabelaDePrecos[opcaoDePreco].find(
-      (elemento) => elemento.tamanho === selectNumber
-    );
+    // const selectObj = tabelaDePrecos[opcaoDePreco].find(
+    //   (elemento) => elemento.tamanho === selectNumber
+    // );
 
-    const selectResult = selectObj.preco;
+    // const selectResult = selectObj.preco;
 
-    const total = qtdNumber * selectResult;
-    totalMesMO += total;
+    // const total = qtdNumber * selectResult;
+    // totalMesMO += total;
+    const resultDasPecas = elemento.querySelector('.divDoPrecoTot').querySelector('.valor').innerHTML
+
+    totalMesMO += parseFloat(resultDasPecas)
+
+
   });
 };
 
@@ -254,7 +259,6 @@ const dogBtn = () => {
   const select = document.createElement('select');
   const inputQtd = document.createElement('input');
   inputQtd.type = 'number';
-  inputQtd.value = '1';
   inputQtd.min = '1';
   const div = document.createElement('div');
   const valoresDoSelect = tabelaDePrecos.varejo.map(
@@ -275,8 +279,8 @@ const dogBtn = () => {
 
   cifrao.innerHTML = 'R$';
   cifrao2.innerHTML = 'R$';
-  cifraoUniVezQtd.innerHTML = '00.00';
-  cifraoUnitario.innerHTML = '00.00';
+  cifraoUniVezQtd.innerHTML = '15.90';
+  cifraoUnitario.innerHTML = '15.90';
   igual.innerHTML = '=';
 
   cifraoUniVezQtd.className = 'valor';
@@ -297,6 +301,7 @@ const dogBtn = () => {
   const linhaDoCachorro = document.querySelector('.linha-dog');
   inputQtd.style.width = '40px';
 
+  select.addEventListener('change', multiplicaPelaQtd);
   inputQtd.addEventListener('change', multiplicaPelaQtd);
 
   div.appendChild(tamanho);
@@ -327,7 +332,6 @@ const catBtn = () => {
   const igual = document.createElement('p');
 
   inputQtd.type = 'number';
-  inputQtd.value = '1';
   inputQtd.min = '1';
   const valoresDoSelect = tabelaDePrecos.varejo.map(
     (tamanho) => tamanho.tamanho
@@ -338,14 +342,19 @@ const catBtn = () => {
   tamanho.innerHTML = 'Tamanho:';
   cifrao.innerHTML = 'R$';
   cifrao2.innerHTML = 'R$';
-  cifraoUniVezQtd.innerHTML = '00.00';
-  cifraoUnitario.innerHTML = '00.00';
+  cifraoUniVezQtd.innerHTML = '15.90';
+  cifraoUnitario.innerHTML = '15.90';
+  cifraoUniVezQtd.className = 'valor'
+  cifraoUnitario.className = 'valor'
   igual.innerHTML = '=';
 
   div.className = 'linhas-de-calculo';
   divPrecoUn.className = 'divDoPreco divDoPrecoPorPç';
   divPrecoTot.className = 'divDoPreco divDoPrecoTot';
   igual.className = 'igual';
+
+  select.addEventListener('change', multiplicaPelaQtd);
+  inputQtd.addEventListener('change', multiplicaPelaQtd);
 
   valoresDoSelect.forEach((tamanho) => {
     const novoTamanho = document.createElement('option');
@@ -392,6 +401,7 @@ const calculaTotal = () => {
   const p = document.createElement('p');
   const pTotal = document.createElement('p');
   const deleteDiv = document.querySelector('.total');
+  const cifrao = document.createElement('p');
 
   if (deleteDiv) {
     deleteDiv.remove();
@@ -405,30 +415,60 @@ const calculaTotal = () => {
 
   pTotal.innerHTML = totalMesMO.toFixed(2);
   p.innerHTML = 'Total:';
+  cifrao.innerHTML = 'R$';
 
   div.className = 'total';
 
   const btnDiv = document.getElementById('div-calculate');
 
   div.appendChild(p);
+  div.appendChild(cifrao);
   div.appendChild(pTotal);
 
   btnDiv.appendChild(div);
 };
 
 function multiplicaPelaQtd(event) {
+  // pegar os valor :
+  // value do input
+  // preço da roupa de acordo com o tamanho
+  // fazer uma condicional para o valor do preço da roupa depender da quantidade total de peças
+  // e por fim o resultado deve ser a multiplicação do valor na peça pela quantidade
+  quantidadDEpecas = 0;
+
   const click = event.target.parentNode;
-  const valorDaPeça = click
+
+  const resultadoDoValorDaPeca = click
+    .querySelector('.divDoPrecoTot')
+    .querySelector('.valor');
+    const valorDeCadaPecaa = click
     .querySelector('.divDoPrecoPorPç')
     .querySelector('.valor');
-    const quantidade = click.querySelector('input')
+  const quantidade = click.querySelector('input');
 
-    const valorDoTamanho = click.querySelector('select').value
+  const inputs = document.querySelectorAll('input');
+  inputs.forEach(
+    (elemento) => (quantidadDEpecas += parseFloat(elemento.value))
+  );
 
-    valorDaPeça.innerHTML = valorDoTamanho * quantidade.value
-    
-    
-  console.log(valorDoTamanho);
+  const select = click.querySelector('select').value;
+
+  let tabelaDePrecoDeAcordoComQtd;
+
+  if (quantidadDEpecas >= 30) {
+    tabelaDePrecoDeAcordoComQtd = tabelaDePrecos.atacado30pç;
+  } else if (quantidadDEpecas >= 8) {
+    tabelaDePrecoDeAcordoComQtd = tabelaDePrecos.atacado8pç;
+  } else {
+    tabelaDePrecoDeAcordoComQtd = tabelaDePrecos.varejo;
+  }
+
+  
+  const precoDaPeca = tabelaDePrecoDeAcordoComQtd.find(elemento => elemento.tamanho === select).preco
+  
+  resultadoDoValorDaPeca.innerHTML = (precoDaPeca * quantidade.value).toFixed(2); // valorDoTamanho * quantidade.value; // resultaado da multiplicação da quantidade pelo valor
+  
+  valorDeCadaPecaa.innerHTML = precoDaPeca
 }
 
 btnDog.addEventListener('click', dogBtn);
