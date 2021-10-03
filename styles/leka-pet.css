@@ -26,6 +26,12 @@ button {
   cursor: pointer;
 }
 
+.btn-delete {
+  width: 30px;
+  height: 30px;
+  background-color: #0000ff;
+}
+
 p {
   display: inline;
   padding: 10px 0;
@@ -39,6 +45,16 @@ p {
   margin-bottom: 10px;
   color: white;
   background-color: #0000ff;
+}
+
+.total p:nth-child(2),
+.total p:nth-child(3) {
+  margin: 0 3px;
+  font-size: 23px;
+}
+
+.total p {
+  padding: 0;
 }
 
 .linhas-de-calculo {
