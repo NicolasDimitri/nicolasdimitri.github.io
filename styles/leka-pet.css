@@ -27,9 +27,35 @@ button {
 }
 
 .btn-delete {
-  width: 30px;
-  height: 30px;
-  background-color: #0000ff;
+  width: 25px;
+  height: 25px;
+  background-color: white;
+  cursor: pointer;
+  border: 1px solid black;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.plus {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 3px;
+  background: red;
+  border-radius: 5px;
+  transform: rotate(45deg);
+}
+
+.plus::after {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 3px;
+  background: red;
+  border-radius: 5px;
+  transform: rotate(90deg);
 }
 
 p {

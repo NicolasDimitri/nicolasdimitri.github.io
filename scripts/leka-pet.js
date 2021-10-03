@@ -260,7 +260,7 @@ const dogBtn = () => {
   const inputQtd = document.createElement('input');
   inputQtd.type = 'number';
   inputQtd.min = '1';
-  inputQtd.value = '1'
+  inputQtd.value = '1';
   const div = document.createElement('div');
   const valoresDoSelect = tabelaDePrecos.varejo.map(
     (tamanho) => tamanho.tamanho
@@ -304,7 +304,8 @@ const dogBtn = () => {
 
   select.addEventListener('change', multiplicaPelaQtd);
   inputQtd.addEventListener('change', multiplicaPelaQtd);
-  
+
+  criaBtnDelete(div);
   div.appendChild(tamanho);
   div.appendChild(select);
   div.appendChild(qtd);
@@ -317,8 +318,7 @@ const dogBtn = () => {
   div.appendChild(igual);
   div.appendChild(divPrecoTot);
   linhaDoCachorro.appendChild(div);
-  criaBtnDelete(div)
-  mudaPrecosDeTodasAsDivs()
+  mudaPrecosDeTodasAsDivs();
 };
 
 const catBtn = () => {
@@ -336,7 +336,7 @@ const catBtn = () => {
 
   inputQtd.type = 'number';
   inputQtd.min = '1';
-  inputQtd.value = '1'
+  inputQtd.value = '1';
   const valoresDoSelect = tabelaDePrecos.varejo.map(
     (tamanho) => tamanho.tamanho
   );
@@ -368,6 +368,7 @@ const catBtn = () => {
   });
   const linhaDoGato = document.querySelector('.linha-cat');
   inputQtd.style.width = '40px';
+  criaBtnDelete(div);
   div.appendChild(tamanho);
   div.appendChild(select);
   div.appendChild(qtd);
@@ -380,8 +381,7 @@ const catBtn = () => {
   div.appendChild(igual);
   div.appendChild(divPrecoTot);
   linhaDoGato.appendChild(div);
-  criaBtnDelete(div)
-  mudaPrecosDeTodasAsDivs()
+  mudaPrecosDeTodasAsDivs();
 };
 let quantidadDEpecas = 0;
 const retornaOsPrecosCertos = () => {
@@ -514,9 +514,9 @@ function mudaPrecosDeTodasAsDivs() {
       (ele) => ele.tamanho === select
     ).preco;
 
-    precounitario.innerHTML = precoDaPeca;
+    precounitario.innerHTML = precoDaPeca.toFixed(2);
 
-    precototal.innerHTML = parseFloat(input) * precoDaPeca;
+    precototal.innerHTML = (parseFloat(input) * precoDaPeca).toFixed(2);
   });
 }
 
@@ -526,15 +526,22 @@ btnCat.addEventListener('click', catBtn);
 
 btnCalculate.addEventListener('click', calculaTotal);
 
-
 function criaBtnDelete(ondeApendaa) {
-const divDelete = document.createElement('div')
-divDelete.className = 'btn-delete'
-divDelete.addEventListener('click', deletaAlinha)
-ondeApendaa.appendChild(divDelete)
+  const divDelete = document.createElement('div');
+  const plus = document.createElement('div');
+  plus.className = 'plus';
+  divDelete.appendChild(plus);
+  divDelete.className = 'btn-delete';
+  divDelete.addEventListener('click', deletaAlinha);
+  ondeApendaa.appendChild(divDelete);
 }
 
 function deletaAlinha(event) {
-  event.target.parentNode.remove()
-  mudaPrecosDeTodasAsDivs()
+  if(event.target.parentNode.className === 'linhas-de-calculo') {
+    event.target.parentNode.remove();
+    mudaPrecosDeTodasAsDivs();
+  } else {
+    event.target.parentNode.parentNode.remove();
+    mudaPrecosDeTodasAsDivs();
+  }
 }
