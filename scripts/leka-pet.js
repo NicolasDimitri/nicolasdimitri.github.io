@@ -537,7 +537,7 @@ function criaBtnDelete(ondeApendaa) {
 }
 
 function deletaAlinha(event) {
-  if(event.target.parentNode.className === 'linhas-de-calculo') {
+  if (event.target.parentNode.className === 'linhas-de-calculo') {
     event.target.parentNode.remove();
     mudaPrecosDeTodasAsDivs();
   } else {
