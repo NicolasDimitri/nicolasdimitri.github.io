@@ -247,11 +247,11 @@ const multiplicadorDaQuantidadePeloPreco = (opcaoDePreco) => {
 
     // const total = qtdNumber * selectResult;
     // totalMesMO += total;
-    const resultDasPecas = elemento.querySelector('.divDoPrecoTot').querySelector('.valor').innerHTML
+    const resultDasPecas = elemento
+      .querySelector('.divDoPrecoTot')
+      .querySelector('.valor').innerHTML;
 
-    totalMesMO += parseFloat(resultDasPecas)
-
-
+    totalMesMO += parseFloat(resultDasPecas);
   });
 };
 
@@ -260,6 +260,7 @@ const dogBtn = () => {
   const inputQtd = document.createElement('input');
   inputQtd.type = 'number';
   inputQtd.min = '1';
+  inputQtd.value = '1'
   const div = document.createElement('div');
   const valoresDoSelect = tabelaDePrecos.varejo.map(
     (tamanho) => tamanho.tamanho
@@ -303,7 +304,7 @@ const dogBtn = () => {
 
   select.addEventListener('change', multiplicaPelaQtd);
   inputQtd.addEventListener('change', multiplicaPelaQtd);
-
+  
   div.appendChild(tamanho);
   div.appendChild(select);
   div.appendChild(qtd);
@@ -316,6 +317,8 @@ const dogBtn = () => {
   div.appendChild(igual);
   div.appendChild(divPrecoTot);
   linhaDoCachorro.appendChild(div);
+  criaBtnDelete(div)
+  mudaPrecosDeTodasAsDivs()
 };
 
 const catBtn = () => {
@@ -333,6 +336,7 @@ const catBtn = () => {
 
   inputQtd.type = 'number';
   inputQtd.min = '1';
+  inputQtd.value = '1'
   const valoresDoSelect = tabelaDePrecos.varejo.map(
     (tamanho) => tamanho.tamanho
   );
@@ -344,8 +348,8 @@ const catBtn = () => {
   cifrao2.innerHTML = 'R$';
   cifraoUniVezQtd.innerHTML = '15.90';
   cifraoUnitario.innerHTML = '15.90';
-  cifraoUniVezQtd.className = 'valor'
-  cifraoUnitario.className = 'valor'
+  cifraoUniVezQtd.className = 'valor';
+  cifraoUnitario.className = 'valor';
   igual.innerHTML = '=';
 
   div.className = 'linhas-de-calculo';
@@ -376,6 +380,8 @@ const catBtn = () => {
   div.appendChild(igual);
   div.appendChild(divPrecoTot);
   linhaDoGato.appendChild(div);
+  criaBtnDelete(div)
+  mudaPrecosDeTodasAsDivs()
 };
 let quantidadDEpecas = 0;
 const retornaOsPrecosCertos = () => {
@@ -441,7 +447,7 @@ function multiplicaPelaQtd(event) {
   const resultadoDoValorDaPeca = click
     .querySelector('.divDoPrecoTot')
     .querySelector('.valor');
-    const valorDeCadaPecaa = click
+  const valorDeCadaPecaa = click
     .querySelector('.divDoPrecoPorPç')
     .querySelector('.valor');
   const quantidade = click.querySelector('input');
@@ -463,12 +469,55 @@ function multiplicaPelaQtd(event) {
     tabelaDePrecoDeAcordoComQtd = tabelaDePrecos.varejo;
   }
 
-  
-  const precoDaPeca = tabelaDePrecoDeAcordoComQtd.find(elemento => elemento.tamanho === select).preco
-  
-  resultadoDoValorDaPeca.innerHTML = (precoDaPeca * quantidade.value).toFixed(2); // valorDoTamanho * quantidade.value; // resultaado da multiplicação da quantidade pelo valor
-  
-  valorDeCadaPecaa.innerHTML = precoDaPeca
+  const precoDaPeca = tabelaDePrecoDeAcordoComQtd.find(
+    (elemento) => elemento.tamanho === select
+  ).preco;
+
+  resultadoDoValorDaPeca.innerHTML = (precoDaPeca * quantidade.value).toFixed(
+    2
+  ); // valorDoTamanho * quantidade.value; // resultaado da multiplicação da quantidade pelo valor
+
+  valorDeCadaPecaa.innerHTML = precoDaPeca;
+  mudaPrecosDeTodasAsDivs();
+}
+
+function mudaPrecosDeTodasAsDivs() {
+  quantidadDEpecas = 0;
+
+  document.querySelectorAll('input').forEach((elemento) => {
+    quantidadDEpecas += parseFloat(elemento.value);
+  });
+  document.querySelectorAll('input').forEach((elemento) => {
+    let tabelaDePrecoDeAcordoComQtd;
+
+    const precounitario = elemento.parentNode
+      .querySelector('.divDoPrecoPorPç')
+      .querySelector('.valor');
+
+    const precototal = elemento.parentNode
+      .querySelector('.divDoPrecoTot')
+      .querySelector('.valor');
+
+    const select = elemento.parentNode.querySelector('select').value;
+
+    const input = elemento.parentNode.querySelector('input').value;
+
+    if (quantidadDEpecas >= 30) {
+      tabelaDePrecoDeAcordoComQtd = tabelaDePrecos.atacado30pç;
+    } else if (quantidadDEpecas >= 8) {
+      tabelaDePrecoDeAcordoComQtd = tabelaDePrecos.atacado8pç;
+    } else {
+      tabelaDePrecoDeAcordoComQtd = tabelaDePrecos.varejo;
+    }
+
+    const precoDaPeca = tabelaDePrecoDeAcordoComQtd.find(
+      (ele) => ele.tamanho === select
+    ).preco;
+
+    precounitario.innerHTML = precoDaPeca;
+
+    precototal.innerHTML = parseFloat(input) * precoDaPeca;
+  });
 }
 
 btnDog.addEventListener('click', dogBtn);
@@ -476,3 +525,16 @@ btnDog.addEventListener('click', dogBtn);
 btnCat.addEventListener('click', catBtn);
 
 btnCalculate.addEventListener('click', calculaTotal);
+
+
+function criaBtnDelete(ondeApendaa) {
+const divDelete = document.createElement('div')
+divDelete.className = 'btn-delete'
+divDelete.addEventListener('click', deletaAlinha)
+ondeApendaa.appendChild(divDelete)
+}
+
+function deletaAlinha(event) {
+  event.target.parentNode.remove()
+  mudaPrecosDeTodasAsDivs()
+}
