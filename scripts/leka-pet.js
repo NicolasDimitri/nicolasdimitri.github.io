@@ -368,6 +368,7 @@ const catBtn = () => {
   });
   const linhaDoGato = document.querySelector('.linha-cat');
   inputQtd.style.width = '40px';
+  criaBtnDelete(div);
   div.appendChild(tamanho);
   div.appendChild(select);
   div.appendChild(qtd);
@@ -380,7 +381,6 @@ const catBtn = () => {
   div.appendChild(igual);
   div.appendChild(divPrecoTot);
   linhaDoGato.appendChild(div);
-  criaBtnDelete(div);
   mudaPrecosDeTodasAsDivs();
 };
 let quantidadDEpecas = 0;
