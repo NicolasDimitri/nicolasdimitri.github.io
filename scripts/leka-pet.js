@@ -243,7 +243,6 @@ const multiplicadorDaQuantidadePeloPreco = (opcaoDePreco) => {
     //   (elemento) => elemento.tamanho === selectNumber
     // );
 
-    // const selectResult = selectObj.preco;
 
     // const total = qtdNumber * selectResult;
     // totalMesMO += total;
